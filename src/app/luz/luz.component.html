@@ -1,0 +1,170 @@
+<div class="container principal">
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs text-black">
+        <li class="tab col s12">
+          <a href="#cnel">CNEL Ep</a>
+        </li>
+      </ul>
+    </div>
+    <div id="cnel" class="col s12">
+      <div class="container">
+        <div class="row">
+          <form name="form" class="col s12" (ngSubmit)="buscar()" #f="ngForm">
+            <div class="row">
+              <div class="input-field col m4 s12">
+                <select id="tipo" name="tipo" [(ngModel)]="model.tipo" #tipo="ngModel" required>
+                  <option value="" disabled selected>Opción de búsqueda</option>
+                  <option *ngFor="let op of opciones" [value]="op.value">{{op.text}}</option>
+                </select>
+                <!-- <label>Materialize Select</label> -->
+              </div>
+              <div class="input-field col m6 s12">
+                <input id="valor" name="valor" type="text" class="validate" [(ngModel)]="model.valor" #valor="ngModel" required>
+                <label for="valor">Valor de búsqueda</label>
+              </div>
+              <div class="input-field col m2 s12">
+                <button class="btn waves-effect waves-light red lighten-1" type="submit">
+                  Enviar
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="loading" class="container">
+        <div class="progress">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+      <div *ngIf="!loading && result && result.Result && (result.Result | json) != '{}'" class="container">
+        <section class="datos">
+          <h4>{{result.Result.cliente}}
+            <small>{{result.Result.cedula}}</small>
+          </h4>
+          <div class="row">
+            <div class="col s12">
+              <ul class="collection">
+                <li class="collection-item">
+                  <div>
+                    <strong>Código único</strong>
+                    <a href="javascript:;" class="secondary-content">
+                       {{result.Cuentas[0].codigoUnico}}
+                    </a>
+                  </div>
+                </li>
+                <li class="collection-item">
+                  <div>
+                    <strong>Unidad de negocios</strong>
+                    <a href="javascript:;" class="secondary-content">
+                       {{result.Cuentas[0].unidadNegocio}}
+                    </a>
+                  </div>
+                </li>
+                <li class="collection-item">
+                  <div>
+                    <strong>Cantón</strong>
+                    <a href="javascript:;" class="secondary-content">
+                       {{result.Cuentas[0].canton}}
+                    </a>
+                  </div>
+                </li>
+                <li class="collection-item">
+                  <div>
+                    <strong>Medidor</strong>
+                    <a href="javascript:;" class="secondary-content">
+                       {{result.Cuentas[0].medidor}}
+                    </a>
+                  </div>
+                </li>
+                <li class="collection-item">
+                  <div>
+                    <strong>Deuda</strong>
+                    <a href="javascript:;" class="secondary-content">
+                       {{result.Cuentas[0].totalDeuda | currency:'USD':true}}
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="resultados">
+          <div class="row">
+            <div class="col s12 m12">
+              <ul class="collapsible popout" data-collapsible="accordion">
+                <li *ngFor="let planilla of result.Cuentas[0].Planillas">
+                  <div class="collapsible-header">
+                    <!-- <i class="material-icons">filter_drama</i> -->
+                    <strong>{{meses[planilla.month-1] +' '+ planilla.year}}</strong>
+                    <span class="new badge" [ngClass]="{'red accent-3': planilla.estado === 'Impaga'}">{{planilla.valorFactura | currency:'USD':true}}</span>
+                  </div>
+                  <div class="collapsible-body">
+                    <table class="bordered highlight">                    
+                      <tbody>
+                        <tr>
+                          <td>
+                             <strong>Estado</strong>
+                          </td>
+                          <td [ngClass]="{'red-text text-accent-3': planilla.estado === 'Impaga'}">{{planilla.estado}}</td>
+                        </tr>
+                        <tr>
+                          <td>
+                             <strong>Consumo</strong>
+                          </td>
+                          <td>{{planilla.consumo + ' Kw'}}</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>Valor factura</strong>
+                          </td>
+                          <td>{{planilla.valorFactura | currency:'USD':true}}</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>Emisión</strong>
+                          </td>
+                          <td>{{planilla.fechaEmision}}</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>Vencimiento</strong>
+                          </td>
+                          <td>{{planilla.fechaVencimiento}}</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>Fecha de Pago</strong>
+                          </td>
+                          <td>{{planilla.fechaPago}}</td>
+                        </tr>
+                        <tr>
+                          <td>
+                             <strong>Descargar</strong>
+                          </td>
+                          <td>
+                            <a class="btn-floating red" [href]="'http://190.214.22.249:80/PlanillaApp/FACTURA?UN=' + planilla.UN + '&cuenta=' + planilla.cuenta + '&year=' + planilla.year + '&month=' + planilla.month">
+                              <i class="large material-icons">file_download</i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="estadisticas">
+          <div class="row">
+            <div class="col s12 m12">
+              <app-chart [chart_op]="chart"></app-chart>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

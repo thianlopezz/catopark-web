@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/materialize-css/dist/css/materialize.min.css";
+
+.secondary-content{
+    color: #2196f3;
+}
+.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: transparent;
+    color: #488aff;
+}
+.tabs .indicator {
+    background-color: #488aff;
+}
+
+.container.principal {
+    min-height: 40rem;
+}

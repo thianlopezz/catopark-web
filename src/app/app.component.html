@@ -1,0 +1,86 @@
+<nav class="blue-theme" role="navigation">
+	<div class="nav-wrapper container">
+		<a id="logo-container" href="#" class="brand-logo">
+			<!-- <img src="/assets/imgs/servico1.png" class="hide-on-med-and-down" alt="Serviya" width="65px" height="65px">
+			<font style="color: #ffff73;" class="hide-on-large-only">Serviya</font> -->
+			Catopark
+		</a>
+		<ul class="right hide-on-med-and-down">
+			<li>
+				<a [routerLink]="['/usuario']">Usuarios</a>
+			</li>
+			<li>
+				<a [routerLink]="['/vehiculo']">Vehiculos</a>
+			</li>
+		</ul>
+
+		<ul id="nav-mobile" class="side-nav">
+			<li>
+				<a [routerLink]="['/ocupante']">Ocupantes</a>
+			</li>
+			<li>
+				<a [routerLink]="['/vehiculo']">Vehiculos</a>
+			</li>
+		</ul>
+		<a href="javascript:;" data-activates="nav-mobile" class="button-collapse">
+			<i class="material-icons">menu</i>
+		</a>
+	</div>
+</nav>
+
+<router-outlet></router-outlet>
+
+<footer class="page-footer blue-theme">
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="white-text">About</h5>
+				<!-- <p class="grey-text text-lighten-4">Tics lover!</p> -->
+			</div>
+			<!-- <div class="col l3 s12">
+					<h5 class="white-text">Settings</h5>
+					<ul>
+						<li>
+							<a class="white-text" href="#!">Link 1</a>
+						</li>
+						<li>
+							<a class="white-text" href="#!">Link 2</a>
+						</li>
+						<li>
+							<a class="white-text" href="#!">Link 3</a>
+						</li>
+						<li>
+							<a class="white-text" href="#!">Link 4</a>
+						</li>
+					</ul>
+				</div> -->
+			<!-- <div class="col l3 s12">
+				<h5 class="white-text">Conéctate</h5>
+				<ul>
+					<li>
+						<a class="white-text" target="_blank" href="https://www.facebook.com/thianlopezz/">Facebook</a>
+					</li>
+					<li>
+						<a class="white-text" target="_blank" href="https://www.instagram.com/thianlopezz/">Instagram</a>
+					</li>
+					<li>
+						<a class="white-text" target="_blank" href="https://twitter.com/thianlopezz/">Twitter</a>
+					</li>
+					<li>
+						<a class="white-text" target="_blank" href="https://www.linkedin.com/in/thianlopezz/">LinkedIn</a>
+					</li>
+					<li>
+						<a class="white-text" target="_blank" href="https://plus.google.com/u/0/+CristhianLopezZambrano">Google</a>
+					</li>
+				</ul>
+			</div> -->
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			<!-- <a class="orange-text text-lighten-3" href="#!">Thian Lopez Z</a> -->
+		</div>
+	</div>
+</footer>
+<app-mensaje-modal>
+</app-mensaje-modal>

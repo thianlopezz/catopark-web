@@ -1,0 +1,163 @@
+<div class="container principal">
+  <div class="fixed-action-btn horizontal">
+    <a class="btn-floating btn-large red" (click)="setAccionModel('I')">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+  <div class="row">
+    <div class="input-field col s4">
+      <i class="material-icons prefix">search</i>
+      <input id="icon_prefix" type="text" [(ngModel)]="filtro">
+      <label for="icon_prefix">Placa, tipo de vehículo</label>
+    </div>
+  </div>
+  <br>
+  <table class="striped responsive-table">
+    <thead>
+      <tr>
+        <th>Tipo de vehículo</th>
+        <th>Placa</th>
+        <th>Ocupantes</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td *ngIf="loadingVehiculos" colspan="4" class="center-align">
+          <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td *ngIf="!loadingVehiculos && vehiculos.length ===0" colspan="4" class="center-align">
+          No Existen vehículo registrados
+        </td>
+      </tr>
+      <tr *ngFor="let vehiculo of vehiculos | filtrar:'tipoVehiculo,placa':filtro">
+        <td>{{vehiculo.tipoVehiculo}}</td>
+        <td>{{vehiculo.placa}}</td>
+        <td>
+          <a (click)="setAccionVehiOcupante('O', vehiculo)" class="btn-floating waves-effect waves-light blue">
+            <i class="material-icons">face</i>
+          </a>
+        </td>
+        <td>
+          <a (click)="setAccionModel('U', vehiculo)" class="btn-floating waves-effect waves-light blue">
+            <i class="material-icons">edit</i>
+          </a>
+          <a (click)="setAccionModel('D', vehiculo)" class="btn-floating waves-effect waves-light red">
+            <i class="material-icons">delete</i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="model" id="modalVehiculo" class="modal">
+  <div class="modal-content">
+    <div class="row">
+      <form id="form" name="form" class="col s12" (ngSubmit)="f.valid && guardarVehiculo(f)" #f="ngForm">
+        <div class="row">
+          <div class="input-field col s12">
+            <select id="idTipo" name="idTipo" [(ngModel)]="model.idTipo" #idTipo="ngModel">
+              <option value="" disabled selected>Elija una opción</option>
+              <option *ngFor="let opcion of tipos" [value]="opcion.id">{{opcion.tipo}}</option>
+            </select>
+            <label>Tipo vehículo</label>
+          </div>
+          <div class="input-field col s12">
+            <input id="placa" name="placa" type="text" class="validate" [(ngModel)]="model.placa" #placa="ngModel" required>
+            <label for="nombre">Placa</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="modal-action waves-effect waves-green btn-flat" form="form">Guardar</button>
+    <!-- <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Guardar</a> -->
+    <a href="javascript:;" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+  </div>
+</div>
+
+<div *ngIf="modelVehiOcupante" id="modalVehiOcupante" class="modal">
+  <div class="modal-content">
+    <div class="row">
+      <form id="form" name="form" class="col s12" (ngSubmit)="f.valid && guardarVehiOcupante(f)" #f="ngForm">
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <div class="input-field col s10">
+                <i class="material-icons prefix">face</i>
+                <input type="text" id="autocomplete-input" class="autocomplete">
+                <label for="autocomplete-input">Ocupante</label>
+              </div>
+              <button type="submit" class="s2 btn-floating waves-effect waves-light blue">
+                <i class="large material-icons">add</i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <table class="striped responsive-table">
+        <thead>
+          <tr>
+            <th>Ocupante</th>
+            <th>Cedula</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngIf="loadingVehiOcupantes" colspan="4" class="center-align">
+              <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-blue-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td *ngIf="!loadingVehiOcupantes && vehiOcupantes.length ===0" colspan="4" class="center-align">
+              No existen ocupantes asiganados
+            </td>
+          </tr>
+          <tr *ngFor="let ocupante of vehiOcupantes">
+            <td>{{ocupante.ocupante}}</td>
+            <td>{{ocupante.cedula}}</td>
+            <td>
+              <a (click)="setAccionVehiOcupante('D', ocupante)" class="btn-floating waves-effect waves-light red">
+                <i class="material-icons">delete</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="javascript:;" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+  </div>
+</div>

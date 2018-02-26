@@ -1,0 +1,9 @@
+<div  id="mensaje-modal" class="modal bottom-sheet">
+  <div *ngIf="message" class="modal-content">
+    <h4>{{message.type}}</h4>
+    <p>{{message.text}}</p>
+  </div>
+  <div class="modal-footer">
+    <a href="javascript:;" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+  </div>
+</div>
