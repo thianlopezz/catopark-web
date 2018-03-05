@@ -68,7 +68,7 @@
 <div *ngIf="model" id="modalUsuario" class="modal">
   <div class="modal-content">
     <div class="row">
-      <form id="form" name="form" class="col s12" (ngSubmit)="f.valid && login(f)" #f="ngForm">
+      <form id="form" name="form" class="col s12" (ngSubmit)="f.valid && guardarUsuario(f)" #f="ngForm">
         <div class="row">
           <div class="input-field col s12">
             <select [disabled]="model.accion==='U'" id="idTipo" name="idTipo" [(ngModel)]="model.idTipo" #idTipo="ngModel">
