@@ -1,6 +1,6 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { GoogleAnalyticsEventsService } from './services/google-analytics-events.service';
+import { LoginService } from './login/login.service';
 
 declare var jQuery: any;
 // declare const ga: Function;
@@ -12,19 +12,27 @@ declare var jQuery: any;
 })
 export class AppComponent implements AfterViewInit {
 
-  constructor(public router: Router,
-    public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+  parker: any;
 
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     ga('set', 'page', event.urlAfterRedirects);
-    //     ga('send', 'pageview');
-    //   }
-    // });
+  constructor(public router: Router,
+    private cdRef: ChangeDetectorRef,
+  private loginService: LoginService) {
   }
 
   ngAfterViewInit() {
 
-    jQuery('.button-collapse').sideNav();
+    jQuery('.button-collapse').sideNav();    
+    setTimeout(() => {
+      jQuery('.dropdown-button').dropdown();
+    }, 1000);
+  }
+
+  ngAfterViewChecked() {
+    this.parker = this.loginService.getLogin();    
+    this.cdRef.detectChanges();
+  }
+
+  isLogged() {
+    return this.loginService.getLogin();
   }
 }

@@ -10,17 +10,19 @@ var catalogo = require('../modelos/Catalogo');
 var vehiculo = require('../modelos/Vehiculo');
 var vehiOcupante = require('../modelos/VehiOcupante');
 
+var parqueo = require('../modelos/Parqueo');
+
 router.get('/', (req, res) => {
     res.send('api works! motherfuckers!');
 });
 
 // L O G I N
-router.post('/aut/login', (req, res) => {
+router.post('/aut/login/admin', (req, res) => {
 
-    autenticacion.login(req.body.usuario, req.body.contrasena, function (err, result) {
+    autenticacion.login('99', req.body.usuario, req.body.contrasena, function (err, result) {
 
-        if(err){
-            res.send({success: false, mensaje: err.message, error: err});
+        if (err) {
+            res.send({ success: false, mensaje: err.message, error: err });
         } else {
 
             var token = jwt.sign(result, secret, {
@@ -35,12 +37,49 @@ router.post('/aut/login', (req, res) => {
 
 });
 
+router.post('/aut/login/user', (req, res) => {
+
+    autenticacion.login('01', req.body.usuario, req.body.contrasena, function (err, result) {
+
+        if (err) {
+            res.send({ success: false, mensaje: err.message, error: err });
+        } else {
+
+            var token = jwt.sign(result, secret, {
+                expiresIn: "24h"
+            });
+
+            result.usuario.token = token;
+
+            res.json(result);
+        }
+    });
+
+});
+
+// E N T R A D A S
+router.get('/parqueo/entrada/:idUsuario', (req, res) => {
+    parqueo.getEntradas(req.params.idUsuario, res);
+});
+router.post('/parqueo/entrada', (req, res) => {
+    console.log(req.body);
+    parqueo.setEntrada(req.body.placa, req.body.idUsuario, res);
+});
+
+// S A L I D A S
+router.get('/parqueo/salida/:idUsuario', (req, res) => {
+    parqueo.getSalidas(req.params.idUsuario, res);
+});
+router.post('/parqueo/salida', (req, res) => {
+    parqueo.setSalida(req.body.placa, req.body.idUsuario, res);
+});
+
 // U S U A R I O S
 router.get('/usuarios/all/:params', (req, res) => {
     usuario.getUsuarios(req.params.params, res);
 });
 router.get('/usuarios/porid/:params', (req, res) => {
-    usuario.getPorId(req.params.params, res);    
+    usuario.getPorId(req.params.params, res);
 });
 router.post('/usuarios/', (req, res) => {
     usuario.mantenimiento(req.body, res);

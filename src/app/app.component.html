@@ -1,25 +1,53 @@
 <nav class="blue-theme" role="navigation">
 	<div class="nav-wrapper container">
 		<a id="logo-container" href="#" class="brand-logo">
-			<!-- <img src="/assets/imgs/servico1.png" class="hide-on-med-and-down" alt="Serviya" width="65px" height="65px">
-			<font style="color: #ffff73;" class="hide-on-large-only">Serviya</font> -->
-			Catopark
+			 <img src="/assets/imgs/cato.png" alt="Catopark" height="65px">
+			<!--<font style="color: #ffff73;" class="hide-on-large-only">Serviya</font> -->
+			<!-- Catopark -->
 		</a>
 		<ul class="right hide-on-med-and-down">
-			<li>
+			<li *ngIf="isLogged()">
 				<a [routerLink]="['/usuario']">Usuarios</a>
 			</li>
-			<li>
+			<li *ngIf="isLogged()">
 				<a [routerLink]="['/vehiculo']">Vehiculos</a>
+			</li>
+			<li *ngIf="parker">
+				<!-- Dropdown Trigger -->
+				<a class='dropdown-button btn red darken-4' href='javascript:;' data-activates='dd1'>{{parker.usuario}}</a>
+				
+				<!-- Dropdown Structure -->
+				<ul id='dd1' class='dropdown-content'>
+					<li>
+						<a [routerLink]="['/login']">
+							<i class="material-icons">exit_to_app</i>
+							Cerrar sesión
+						</a>
+					</li>
+				</ul>
 			</li>
 		</ul>
 
 		<ul id="nav-mobile" class="side-nav">
-			<li>
+			<li *ngIf="isLogged()">
 				<a [routerLink]="['/usuario']">Usuarios</a>
 			</li>
-			<li>
+			<li *ngIf="isLogged()">
 				<a [routerLink]="['/vehiculo']">Vehiculos</a>
+			</li>
+			<li *ngIf="parker">
+				<!-- Dropdown Trigger -->
+				<a class='dropdown-button btn red darken-4' href='javascript:;' data-activates='dd2'>{{parker.usuario}}</a>
+				
+				<!-- Dropdown Structure -->
+				<ul id='dd2' class='dropdown-content'>
+					<li>
+						<a [routerLink]="['/login']">
+							<i class="material-icons">exit_to_app</i>
+							Cerrar sesión
+						</a>
+					</li>
+				</ul>
 			</li>
 		</ul>
 		<a href="javascript:;" data-activates="nav-mobile" class="button-collapse">
