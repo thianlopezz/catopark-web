@@ -3,7 +3,7 @@
   <br>
   <div class="row">
     <div class="col s12 m6 l6">
-      <form id="form" name="form" class="col s12" (ngSubmit)="f.valid && login(f)" #f="ngForm">
+      <form id="form" name="form" class="col s12" (ngSubmit)="f.valid && login()" #f="ngForm">
         <div class="row">
           <div class="input-field col s12">
             <input id="usuario" name="usuario" type="text" class="validate" [(ngModel)]="model.usuario" #usuario="ngModel" required>
