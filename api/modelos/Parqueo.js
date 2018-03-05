@@ -26,7 +26,6 @@ function Parqueo() {
                 } else {
 
                     let data = result[0];
-                    console.log(data);
 
                     for (let i = 0; i < data.length; i++) {
                         const claves = 'nombre:' + data[i].nombre + ';' + 'placa:' + data[i].placa + ';' + 'hora:' + data[i].hora;
@@ -44,8 +43,18 @@ function Parqueo() {
             if (error) {
                 res.send({ success: false, mensaje: 'Ocurrió un error inténtelo mas tarde.', error: error });
             } else {
+                res.send({ success: true, data: result[0] });
+            }
+        });
+    };
 
-                if (result[0][0].error){
+    this.setSalida = function (placa, idUsuario, res) {
+        DataAccess.exec_arraysp('setSalida', [placa, idUsuario], function (error, result) {
+            if (error) {
+                res.send({ success: false, mensaje: 'Ocurrió un error inténtelo mas tarde.', error: error });
+            } else {
+
+                if (result[0][0].error) {
                     res.send({ success: false, mensaje: result[0][0].mensaje });
                 } else {
 
@@ -58,16 +67,6 @@ function Parqueo() {
 
                     res.send({ success: true, data: data });
                 }
-            }
-        });
-    };
-
-    this.setSalida = function (placa, idUsuario, res) {
-        DataAccess.exec_arraysp('setSalida', [placa, idUsuario], function (error, result) {
-            if (error) {
-                res.send({ success: false, mensaje: 'Ocurrió un error inténtelo mas tarde.', error: error });
-            } else {
-                res.send({ success: true, data: result[0] });
             }
         });
     };
