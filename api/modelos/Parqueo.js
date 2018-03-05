@@ -21,15 +21,20 @@ function Parqueo() {
                 res.send({ success: false, mensaje: 'Ocurrió un error inténtelo mas tarde.', error: error });
             } else {
 
-                let data = result[0];
-                console.log(data);
+                if (result[0][0].error) {
+                    res.send({ success: false, mensaje: result[0][0].mensaje });
+                } else {
 
-                for (let i = 0; i < data.length; i++) {
-                    const claves = 'nombre:' + data[i].nombre + ';' + 'placa:' + data[i].placa + ';' + 'hora:' + data[i].hora;
-                    enviaCorreo(claves, data[i].correo, 'Notificación de ingreso a parqueo', './plantillas/Catopark/entrada');
+                    let data = result[0];
+                    console.log(data);
+
+                    for (let i = 0; i < data.length; i++) {
+                        const claves = 'nombre:' + data[i].nombre + ';' + 'placa:' + data[i].placa + ';' + 'hora:' + data[i].hora;
+                        enviaCorreo(claves, data[i].correo, 'Notificación de ingreso a parqueo', './plantillas/Catopark/entrada');
+                    }
+
+                    res.send({ success: true, data: data });
                 }
-
-                res.send({ success: true, data: data });
             }
         });
     };
@@ -40,14 +45,19 @@ function Parqueo() {
                 res.send({ success: false, mensaje: 'Ocurrió un error inténtelo mas tarde.', error: error });
             } else {
 
-                let data = result[0];
+                if (result[0][0].error){
+                    res.send({ success: false, mensaje: result[0][0].mensaje });
+                } else {
 
-                for (let i = 0; i < data.length; i++) {
-                    const claves = 'nombre:' + data[i].nombre + ';' + 'placa:' + data[i].placa + ';' + 'hora:' + data[i].hora;
-                    enviaCorreo(claves, data[i].correo, 'Notificación de salida a parqueo', './plantillas/Catopark/salida');
+                    let data = result[0];
+
+                    for (let i = 0; i < data.length; i++) {
+                        const claves = 'nombre:' + data[i].nombre + ';' + 'placa:' + data[i].placa + ';' + 'hora:' + data[i].hora;
+                        enviaCorreo(claves, data[i].correo, 'Notificación de salida a parqueo', './plantillas/Catopark/salida');
+                    }
+
+                    res.send({ success: true, data: data });
                 }
-
-                res.send({ success: true, data: data });
             }
         });
     };
