@@ -7,7 +7,14 @@ function Vehiculo() {
             if (error) {
                 res.send({ success: false, mensaje: 'Ocurrió un error inténtelo mas tarde.', error: error });
             } else {
-                res.send({ success: true, data: result[0] });
+
+                let vehiculos = result[0];
+
+                for(let i=0; i<vehiculos.length; i++){
+                    vehiculos[i].ocupantes = result[1].filter(x => x.idVehiculo === vehiculos[i].idVehiculo);
+                }
+                
+                res.send({ success: true, data: vehiculos });
             }
         });
     };

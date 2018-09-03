@@ -11,6 +11,7 @@ var vehiculo = require('../modelos/Vehiculo');
 var vehiOcupante = require('../modelos/VehiOcupante');
 
 var parqueo = require('../modelos/Parqueo');
+var notificacion = require('../modelos/Notificacion');
 
 router.get('/', (req, res) => {
     res.send('api works! motherfuckers!');
@@ -37,7 +38,7 @@ router.post('/aut/login/admin', (req, res) => {
 
 });
 
-router.post('/aut/login/user', (req, res) => {
+router.post('/login/app', (req, res) => {
 
     autenticacion.login('01', req.body.usuario, req.body.contrasena, function (err, result) {
 
@@ -62,7 +63,6 @@ router.get('/parqueo/entrada/:idUsuario', (req, res) => {
     parqueo.getEntradas(req.params.idUsuario, res);
 });
 router.post('/parqueo/entrada', (req, res) => {
-    console.log(req.body);
     parqueo.setEntrada(req.body.placa, req.body.idUsuario, res);
 });
 
@@ -107,6 +107,14 @@ router.post('/vehiocupante/', (req, res) => {
 // C A T A L O G O
 router.get('/catalogo/all/:tipo', (req, res) => {
     catalogo.getCatalogo(req.params.tipo, res);
+});
+
+// N O T F I C A C I O N E S
+router.get('/notificaciones/:params', (req, res) => {
+    notificacion.getNotificaciones(req.params.params, res);
+});
+router.post('/notificaciones/', (req, res) => {
+    notificacion.mantenimiento(req.body, res);
 });
 
 // B R O K E R

@@ -72,60 +72,60 @@ export class VehiculoComponent implements OnInit, AfterViewInit {
 
     this.vehiculoService.mantenimiento(this.model)
       .subscribe(
-      result => {
-        if (result.success) {
+        result => {
+          if (result.success) {
 
-          jQuery('#modalVehiculo').modal('close');
-          this.getVehiculos();
+            jQuery('#modalVehiculo').modal('close');
+            this.getVehiculos();
 
-          if (form) { form.resetForm(); }
+            if (form) { form.resetForm(); }
 
-          // Materialize.toast(message, displayLength, className, completeCallback);
-          Materialize.toast(result.mensaje, 2000, 'green lighten-1');
-        } else {
+            // Materialize.toast(message, displayLength, className, completeCallback);
+            Materialize.toast(result.mensaje, 2000, 'green lighten-1');
+          } else {
 
-          console.log(result.error);
-          Materialize.toast(result.mensaje, 2000, 'red lighten-1');
-        }
+            console.log(result.error);
+            Materialize.toast(result.mensaje, 2000, 'red lighten-1');
+          }
 
-        this.loading = false;
-      }, error => {
+          this.loading = false;
+        }, error => {
 
-        console.log(error);
-        Materialize.toast('Ocurrió un error al conectarse al servidor', 2000, 'red lighten-1');
-        this.loading = false;
-      });
+          console.log(error);
+          Materialize.toast('Ocurrió un error al conectarse al servidor', 2000, 'red lighten-1');
+          this.loading = false;
+        });
   }
 
   private guardarVehiOcupante(form?: NgForm) {
 
-    if (!this.modelVehiOcupante.accion) { this.modelVehiOcupante.accion = 'I' }
+    if (!this.modelVehiOcupante.accion) { this.modelVehiOcupante.accion = 'I'; }
 
     this.vehiOcupanteService.mantenimiento(this.modelVehiOcupante)
       .subscribe(
-      result => {
-        if (result.success) {
+        result => {
+          if (result.success) {
 
-          jQuery('#modalVehiOcupante').modal('close');
-          this.getVehiOcupante();
+            jQuery('#modalVehiOcupante').modal('close');
+            this.getVehiOcupante();
 
-          if (form) { form.resetForm(); }
+            if (form) { form.resetForm(); }
 
-          // Materialize.toast(message, displayLength, className, completeCallback);
-          Materialize.toast(result.mensaje, 2000, 'green lighten-1');
-        } else {
+            // Materialize.toast(message, displayLength, className, completeCallback);
+            Materialize.toast(result.mensaje, 2000, 'green lighten-1');
+          } else {
 
-          console.log(result.error);
-          Materialize.toast(result.mensaje, 2000, 'red lighten-1');
-        }
+            console.log(result.error);
+            Materialize.toast(result.mensaje, 2000, 'red lighten-1');
+          }
 
-        this.loading = false;
-      }, error => {
+          this.loading = false;
+        }, error => {
 
-        console.log(error);
-        Materialize.toast('Ocurrió un error al conectarse al servidor', 2000, 'red lighten-1');
-        this.loading = false;
-      });
+          console.log(error);
+          Materialize.toast('Ocurrió un error al conectarse al servidor', 2000, 'red lighten-1');
+          this.loading = false;
+        });
   }
 
   setAccionModel(accion, model?) {
@@ -136,17 +136,16 @@ export class VehiculoComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         jQuery('select').material_select();
-        let self = this;
+        const self = this;
         jQuery('#idTipo').on('change', function () {
           self.model.idTipo = Number(this.value);
-        })
-      }, 500);      
+        });
+      }, 500);
 
       if (accion === 'U') {
 
-        jQuery("form#form input:text").reverse().each(function () {
-          debugger;
-          var input = jQuery(this);
+        jQuery('form#form input:text').reverse().each(function () {
+          const input = jQuery(this);
           if (this.className !== 'select-dropdown') {
 
             setTimeout(() => {
@@ -175,7 +174,7 @@ export class VehiculoComponent implements OnInit, AfterViewInit {
     if (model.idVehiculo) {
       this.modelVehiOcupante = {
         idVehiculo: model.idVehiculo
-      }
+      };
     }
 
     this.setAutoComplete();
@@ -186,7 +185,7 @@ export class VehiculoComponent implements OnInit, AfterViewInit {
       jQuery('#modalVehiOcupante').modal('open');
     } if (accion === 'D') {
 
-      this.model = Object.assign({ accion: accion }, model);
+      this.modelVehiOcupante = Object.assign({ accion: accion }, model);
       // this.confirmaModalService.go('¿Está seguro de eliminar el usuario?');
       // confirmar
       this.guardarVehiOcupante();
@@ -196,20 +195,20 @@ export class VehiculoComponent implements OnInit, AfterViewInit {
   private getVehiculos() {
     this.vehiculoService.getAll()
       .subscribe(
-      result => {
-        if (result.success) {
-          this.vehiculos = result.data;
-        } else {
+        result => {
+          if (result.success) {
+            this.vehiculos = result.data;
+          } else {
 
-          console.log(result.error);
-        }
+            console.log(result.error);
+          }
 
-        this.loadingVehiculos = false;
-      }, error => {
+          this.loadingVehiculos = false;
+        }, error => {
 
-        console.log(error);
-        this.loadingVehiculos = false;
-      });
+          console.log(error);
+          this.loadingVehiculos = false;
+        });
   }
 
   private getVehiOcupante() {
@@ -218,63 +217,62 @@ export class VehiculoComponent implements OnInit, AfterViewInit {
 
     this.vehiOcupanteService.getPorIdVehiculo(this.modelVehiOcupante.idVehiculo)
       .subscribe(
-      result => {
-        if (result.success) {
-          debugger;
-          this.vehiOcupantes = result.data;
-        } else {
+        result => {
+          if (result.success) {
+            this.vehiOcupantes = result.data;
+          } else {
 
-          console.log(result.error);
-        }
+            console.log(result.error);
+          }
 
-        this.loadingVehiOcupantes = false;
-      }, error => {
+          this.loadingVehiOcupantes = false;
+        }, error => {
 
-        console.log(error);
-        this.loadingVehiOcupantes = false;
-      });
+          console.log(error);
+          this.loadingVehiOcupantes = false;
+        });
   }
 
   private getTipos() {
     this.catalogoService.getAll('tv')
       .subscribe(
-      result => {
-        if (result.success) {
-          this.tipos = result.data;
-        } else {
+        result => {
+          if (result.success) {
+            this.tipos = result.data;
+          } else {
 
-          console.log(result.error);
-        }
-      }, error => {
+            console.log(result.error);
+          }
+        }, error => {
 
-        console.log(error);
-      });
+          console.log(error);
+        });
   }
 
   getOcupantes() {
 
     this.usuarioService.getAll()
       .subscribe(
-      result => {
-        if (result.success) {
-          this.ocupantes = result.data.filter(x => x.idTipo === 0);
-          this.ocupantesMap = this.mapAuto(this.ocupantes);
-        } else {
+        result => {
+          if (result.success) {
+            this.ocupantes = result.data.filter(x => x.idTipo === 0);
+            this.ocupantesMap = this.mapAuto(this.ocupantes);
+          } else {
 
-          console.log(result.error);
-        }
+            console.log(result.error);
+          }
 
-        this.loadingVehiculos = false;
-      }, error => {
+          this.loadingVehiculos = false;
+        }, error => {
 
-        console.log(error);
-        this.loadingVehiculos = false;
-      });
+          console.log(error);
+          this.loadingVehiculos = false;
+        });
 
   }
 
   setAutoComplete() {
-    let self = this;
+    const self = this;
     jQuery('input.autocomplete').autocomplete({
       data: this.ocupantesMap,
       onAutocomplete: function (val) {

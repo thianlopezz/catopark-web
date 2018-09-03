@@ -113,20 +113,19 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         jQuery('select').material_select();
-        let self = this;
+        const self = this;
         jQuery('#idTipo').on('change', function () {
           self.model.idTipo = Number(this.value);
           setTimeout(() => {
             jQuery('select').material_select();
           }, 50);
-        })
+        });
       }, 500);
 
       if (accion === 'U') {
 
-        jQuery("form#form input:text").reverse().each(function () {
-          debugger;
-          var input = jQuery(this);
+        jQuery('form#form input:text').reverse().each(function () {
+          const input = jQuery(this);
           if (this.className !== 'select-dropdown') {
 
             setTimeout(() => {
